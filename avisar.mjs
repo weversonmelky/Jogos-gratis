@@ -33,9 +33,8 @@ for (const j of jogos.slice(0, 5)) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      username: "Seo Joo-Heon tomb raider king",
-      content: `@everyone ${frase}`,
-      allowed_mentions: { parse: ["everyone"] },
+      username: "Seo Joo-Heon",
+      content: frase,
       embeds: [{
         title: `🎮 ${j.title}`,
         url: j.open_giveaway_url,

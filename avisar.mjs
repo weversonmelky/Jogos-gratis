@@ -24,6 +24,23 @@ if (!Array.isArray(jogos)) {
   process.exit(0);
 }
 
+let cambio = null;
+try {
+  const c = await fetch("https://economia.awesomeapi.com.br/json/last/USD-BRL");
+  cambio = parseFloat((await c.json()).USDBRL.bid);
+} catch (e) {
+  console.log("Câmbio indisponível:", e.message);
+}
+
+function valorEmReais(worth) {
+  const usd = parseFloat(String(worth).replace(/[^0-9.]/g, ""));
+  if (!cambio || isNaN(usd)) return String(worth);
+  return (usd * cambio).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+}
+
 for (const j of jogos.slice(0, 5)) {
   if (enviados.includes(j.id)) continue;
 
@@ -39,7 +56,7 @@ for (const j of jogos.slice(0, 5)) {
         title: `🎮 ${j.title}`,
         url: j.open_giveaway_url,
         color: 0x7c3aed,
-        description: `Valor: ${j.worth}\nAté: ${j.end_date}`,
+                description: `Valor: ${valorEmReais(j.worth)}\nAté: ${j.end_date}`,
         fields: [
           { name: "Categoria", value: String(j.type), inline: true },
           { name: "Plataformas", value: String(j.platforms), inline: true },

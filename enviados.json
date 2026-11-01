@@ -1,1 +1,6 @@
-[3839,3838,3837,3346,3836]
+      - if: always()
+        run: |
+          git config user.name "bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add enviados.json
+          git diff --staged --quiet || (git commit -m "atualiza" && git pull --rebase && git push)

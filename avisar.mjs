@@ -26,8 +26,9 @@ if (!Array.isArray(jogos)) {
 
 let cambio = null;
 try {
-  const c = await fetch("https://economia.awesomeapi.com.br/json/last/USD-BRL");
-  cambio = parseFloat((await c.json()).USDBRL.bid);
+  const c = await fetch("https://open.er-api.com/v6/latest/USD");
+  cambio = (await c.json()).rates.BRL;
+  console.log("Câmbio USD-BRL:", cambio);
 } catch (e) {
   console.log("Câmbio indisponível:", e.message);
 }
